@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'quizz',
 
     'rest_framework',
+    'drf_yasg',
 
 ]
 

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from quizz.models import Admin
 from .models import Survey, Question, Choice, Answer
 
 
