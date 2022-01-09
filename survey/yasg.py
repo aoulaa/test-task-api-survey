@@ -6,10 +6,10 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Api_system_of_user_surveys",
+      title="survey",
       default_version='v1',
       description="API для системы опросов пользователей",
-      license=openapi.License(name="BSD License"),
+      license=openapi.License(name="License"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),

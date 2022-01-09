@@ -120,7 +120,7 @@ def choice_update(request, choice_id):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def active_survey_view(request):
-    survey = Survey.objects.filter(end_date__gte=timezone.now()).filter(pub_date__lte=timezone.now())
+    survey = Survey.objects.filter(end_date__gte=timezone.now()).filter(start_date__lte=timezone.now())
     serializer = SurveySerializer(survey, many=True)
     return Response(serializer.data)
 

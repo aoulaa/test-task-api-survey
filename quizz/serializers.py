@@ -21,7 +21,14 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = '__all__'
+        fields = [
+            'id',
+            'user_id',
+            'survey',
+            'question',
+            'choice',
+            'choice_text',
+        ]
 
     def create(self, validated_data):
         return Answer.objects.create(**validated_data)
@@ -63,7 +70,11 @@ class ChoiceSerializer(serializers.Serializer):
 
     class Meta:
         model = Choice
-        fields = '__all__'
+        fields = [
+            'id'
+            'question',
+            'choice_text',
+        ]
 
     def create(self, validated_data):
         return Choice.objects.create(**validated_data)
@@ -90,7 +101,13 @@ class QuestionSerializer(serializers.Serializer):
 
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = [
+            'id'
+            'survey',
+            'question_text',
+            'question_type',
+            'choices',
+        ]
 
     def create(self, validated_data):
         return Question.objects.create(**validated_data)
@@ -104,22 +121,31 @@ class QuestionSerializer(serializers.Serializer):
 
 class SurveySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    survey_name = serializers.CharField(max_length=200)
-    pub_date = serializers.DateTimeField()
+    name = serializers.CharField(max_length=200)
+    start_date = serializers.DateTimeField()
     end_date = serializers.DateTimeField()
-    survey_description = serializers.CharField(max_length=200)
+    description = serializers.CharField(max_length=200)
     questions = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Survey
-        fields = '__all__'
+        fields = [
+            'name',
+            'start_date',
+            'start_date',
+            'end_date',
+            'description',
+            'questions',
+            'id',
+
+        ]
 
     def create(self, validated_data):
         return Survey.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        if 'pub_date' in validated_data:
-            raise serializers.ValidationError({'pub_date': 'Вы не можете изменять это поле.'})
+        if 'start_date' in validated_data:
+            raise serializers.ValidationError({'start_date': 'Вы не можете изменять это поле.'})
         for key, value in validated_data.items():
             setattr(instance, key, value)
         instance.save()
